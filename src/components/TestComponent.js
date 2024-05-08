@@ -9,6 +9,7 @@ import {
   ProjectTitleDiv,
   ButtonDiv,
   StyledIcon,
+  NavIconWrapper,
 } from "./StyledComponent";
 import { useEffect, useRef, useState } from "react";
 import { ProjectsData } from "../constants/projects";
@@ -21,6 +22,8 @@ const TestComponents = () => {
   const [visible, setVisible] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const width = window.innerWidth;
   const coverRef = useRef();
   const history = useHistory();
 
@@ -96,18 +99,26 @@ const TestComponents = () => {
           <StyledLink to={"/"}>
             <Logo src={Photo} />
           </StyledLink>
-          <OptionsWrapper>
-            {OptionArray.map((title) => (
-              <MenuOptions
-                onClick={(e) => goToComponent(e.target.innerText)}
-                color={"white"}
-                fontSize={"20px"}
-                hover={"rgb(231 102 33 / 59%) !important"}
-              >
-                {title}
-              </MenuOptions>
-            ))}
-          </OptionsWrapper>
+          {(isOpen || width > 1150) && (
+            <OptionsWrapper>
+              {OptionArray.map((title) => (
+                <MenuOptions
+                  onClick={(e) => goToComponent(e.target.innerText)}
+                  color={"white"}
+                  fontSize={"20px"}
+                  hover={"rgb(231 102 33 / 59%) !important"}
+                >
+                  {title}
+                </MenuOptions>
+              ))}
+            </OptionsWrapper>
+          )}
+          <NavIconWrapper>
+            <i
+              className={isOpen ? "ion-close-round" : "ion-navicon-round"}
+              onClick={() => setIsOpen((prev) => !prev)}
+            ></i>
+          </NavIconWrapper>
         </HeaderDiv>
         <ButtonDiv>
           <StyledIcon onClick={() => ProjectChange("prev")}>

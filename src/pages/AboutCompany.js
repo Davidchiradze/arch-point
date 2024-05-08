@@ -41,9 +41,6 @@ const AboutCompany = () => {
             კომპანია ბაზარზე; განახორციელოს მნიშვნელობი პროექტები როგორც
             საქართველოში, ისე მის საზღვრებს გარეთ.
           </ParagraphAbout>
-          <ParagraphAbout>
-            <Span>არქ-ფოინთი</Span> - იცხოვრე შენი ცხოვრებით!
-          </ParagraphAbout>
         </ParagraphWrapper>
 
         <AboutTitleDiv>

@@ -18,6 +18,11 @@ export const HeaderDiv = styled.div`
   justify-content: space-between;
   margin-top: ${(props) => props.margin};
   padding: ${(props) => props.padding};
+  align-items: center;
+  position: relative;
+  @media screen and (max-width: 1150px) {
+    padding: 0 20px;
+  }
 `;
 
 export const MenuOptions = styled.h1`
@@ -38,6 +43,15 @@ export const OptionsWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
+  @media screen and (max-width: 1150px) {
+    /* display: none; */
+    gap: 15px;
+    flex-direction: column;
+    position: absolute;
+    right: 20%;
+    top: 20px;
+    /* background: #ffff; */
+  }
 `;
 export const Div = styled.div`
   width: 100%;
@@ -432,3 +446,14 @@ export const BackgroundImage = styled.div`
 `;
 
 export const Sider = styled.div``;
+
+export const NavIconWrapper = styled.div`
+  display: none;
+  @media screen and (max-width: 1150px) {
+    display: flex;
+  }
+  > i {
+    cursor: pointer;
+    font-size: 35px;
+  }
+`;
