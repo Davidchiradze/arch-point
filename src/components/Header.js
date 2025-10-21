@@ -1,58 +1,81 @@
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   HeaderDiv,
-  MenuOptions,
-  OptionsWrapper,
+  HeaderContent,
   Logo,
-  StyledLink,
+  Nav,
+  NavMenu,
+  MenuOptions,
+  MobileMenuButton,
   LineAbout,
-  NavIconWrapper,
-} from "../components/StyledComponent";
+} from "./StyledComponent";
 import Photo from "../assets/logoarch-removebg-preview.png";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useState } from "react";
 
-const OptionArray = ["პროექტები", "კომპანია", "სერვისები", "კონტაქტი"];
+const navigationItems = [
+  { label: "მთავარი", path: "/" },
+  { label: "პროექტები", path: "/projectpage" },
+  { label: "კომპანია", path: "/aboutCompany" },
+  { label: "სერვისები", path: "/servicepage" },
+  { label: "კონტაქტი", path: "/contactinfo" },
+];
+
 function Header() {
-  const width = window.innerWidth;
-  const history = useHistory();
-  const goToComponent = (e) => {
-    if (e === "პროექტები") {
-      history.push("/projectpage");
-    } else if (e === "კომპანია") {
-      history.push("/aboutCompany");
-    } else if (e === "კონტაქტი") {
-      history.push("/contactinfo");
-    } else if (e === "სერვისები") {
-      history.push("/servicepage");
-    }
-  };
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const history = useHistory();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleNavigation = (path) => {
+    history.push(path);
+    setIsOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
-      <HeaderDiv background={"#fff"} position={""} padding={"0 15%"}>
-        <StyledLink to={"/"}>
-          <Logo src={Photo} />
-        </StyledLink>
-        {(isOpen || width > 1150) && (
-          <OptionsWrapper>
-            {OptionArray.map((title) => (
-              <MenuOptions
-                onClick={(e) => goToComponent(e.target.innerText)}
-                color={"#888888"}
-                fontSize={"16px"}
-                hover={"#f7931d"}
-              >
-                {title}
-              </MenuOptions>
-            ))}
-          </OptionsWrapper>
-        )}
-        <NavIconWrapper>
-          <i
-            className={isOpen ? "ion-close-round" : "ion-navicon-round"}
-            onClick={() => setIsOpen((prev) => !prev)}
-          ></i>
-        </NavIconWrapper>
+      <HeaderDiv scrolled={scrolled}>
+        <HeaderContent>
+          <Logo
+            src={Photo}
+            alt="არქ ფოინთი"
+            onClick={() => handleNavigation("/")}
+          />
+
+          <Nav>
+            <NavMenu isOpen={isOpen}>
+              {navigationItems.map((item, index) => (
+                <MenuOptions
+                  key={index}
+                  to={item.path}
+                  onClick={() => handleNavigation(item.path)}
+                  color={scrolled ? "#333" : "#fff"}
+                  hover="#e76621"
+                >
+                  {item.label}
+                </MenuOptions>
+              ))}
+            </NavMenu>
+
+            <MobileMenuButton onClick={toggleMenu}>
+              <i
+                className={isOpen ? "ion-close-round" : "ion-navicon-round"}
+              ></i>
+            </MobileMenuButton>
+          </Nav>
+        </HeaderContent>
       </HeaderDiv>
       <LineAbout />
     </>

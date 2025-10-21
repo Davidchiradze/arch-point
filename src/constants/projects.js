@@ -133,12 +133,6 @@ export const ProjectsData = [
     id: 10,
   },
   {
-    title: " საგურამო",
-    m2: "150 კვ",
-    image: [img40, img41, img42, img43, img44],
-    id: 11,
-  },
-  {
     title: "საგურამო",
     m2: "450 კვ",
     image: [img50, img51, img52],
